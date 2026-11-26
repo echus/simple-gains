@@ -1,0 +1,23 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+node_modules
+dist
+*.local
+
+# Editor and tool directories
+.vscode
+.idea
+.claude
+.DS_Store
+*.sw?
+
+# Wrangler local state and secrets
+.wrangler
+.dev.vars
+
+# Playwright output
+test-results
+playwright-report

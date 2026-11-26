@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Simple Gains is a simple local-first log for weight training." />
+    <meta name="theme-color" content="#000000" />
+    <title>Simple Gains</title>
+    <script>
+      // Safari on iPhone and iPad zooms into any field with text under 16px. maximum-scale stops
+      // that, and iOS still lets people pinch to zoom. Not elsewhere: Android would block the
+      // pinch too
+      if (/iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+        document.querySelector('meta[name=viewport]').content += ', maximum-scale=1';
+      }
+
+      // Apply a saved theme before first paint so the page doesn't flash
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme) document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript><p>Simple Gains needs JavaScript to run.</p></noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

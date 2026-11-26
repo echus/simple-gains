@@ -1,0 +1,163 @@
+/* The theme, fonts and list look follow Dumb Tasks (https://github.com/echus/dumb-tasks) */
+
+/* Inter Display: Inter's variable font with the optical-size axis. Only the Latin file,
+   so the offline cache stays small. Use with --title-opsz to get the display cut. */
+@font-face {
+  font-family: 'Inter Display';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/inter/files/inter-latin-opsz-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Dark is the default. Light applies when the system prefers it, unless the
+   theme switch has set data-theme="dark", or whenever it sets "light". */
+:root {
+  /* Grey cards on a black page */
+  --bg: #000000;
+  --surface: #2f2f31;
+  --text: #e3e4e6;
+  --muted: #888b92;
+  --border-strong: #5c5e64;
+  /* Ink: the accent is the text colour itself */
+  --accent: var(--text);
+  --on-accent: #121314;
+  /* A soft grey fill for the number fields. A faint one disappears on dark, so it is
+     stronger here than on white */
+  --fill-quiet: color-mix(in srgb, var(--muted) 26%, transparent);
+  /* The set fields: fainter still, so a card of them doesn't shout */
+  --fill-field: color-mix(in srgb, var(--muted) 14%, transparent);
+
+  /* A faint light edge and haze around the cards */
+  --glow-ring: rgb(255 255 255 / 0.14);
+  --glow: rgb(255 255 255 / 0.08);
+
+  /* Faded ink for the header icon buttons */
+  --ink-faded: color-mix(in srgb, var(--text) 80%, var(--bg));
+  /* Placeholder text: muted on the black page (anything darker gets lost) */
+  --icon-quiet: var(--muted);
+  /* Buttons that can't be used, e.g. undo with nothing to undo */
+  --icon-disabled: #5c5e64;
+
+  /* Done ticks: each exercise's fluoro colour with a little pale base mixed in, as the icon
+     circles in Dumb Tasks. --on-tint colours the tick */
+  --tint-base: #f0f0f2;
+  --on-tint: #1b1c1f;
+  --circle-tint: 75%;
+
+  /* Corners are only just softened */
+  --radius: 4px;
+
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-title: 'Inter Display', var(--font-body); /* logo, headings */
+  --title-opsz: 'opsz' 32;
+
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --bg: whitesmoke; /* #f5f5f5 */
+    --surface: #ffffff;
+    --text: #1b1c1f;
+    --muted: #5f6269;
+    --border-strong: #a9abb1;
+    --on-accent: #ffffff;
+    --fill-quiet: color-mix(in srgb, var(--muted) 10%, transparent);
+    --fill-field: color-mix(in srgb, var(--muted) 6%, transparent);
+    --glow-ring: rgb(0 0 0 / 0.1);
+    --glow: transparent; /* no shadow on white: the edge is enough */
+    --icon-quiet: color-mix(in srgb, var(--muted) 75%, var(--bg));
+    --icon-disabled: color-mix(in srgb, var(--icon-quiet) 30%, var(--bg));
+    --tint-base: var(--surface);
+    --on-tint: var(--text);
+    --circle-tint: 50%;
+
+    color-scheme: light;
+  }
+}
+
+:root[data-theme='light'] {
+  --bg: whitesmoke; /* #f5f5f5 */
+  --surface: #ffffff;
+  --text: #1b1c1f;
+  --muted: #5f6269;
+  --border-strong: #a9abb1;
+  --on-accent: #ffffff;
+  --fill-quiet: color-mix(in srgb, var(--muted) 10%, transparent);
+  --fill-field: color-mix(in srgb, var(--muted) 6%, transparent);
+  --glow-ring: rgb(0 0 0 / 0.1);
+  --glow: transparent;
+  --icon-quiet: color-mix(in srgb, var(--muted) 75%, var(--bg));
+  --icon-disabled: color-mix(in srgb, var(--icon-quiet) 30%, var(--bg));
+  --tint-base: var(--surface);
+  --on-tint: var(--text);
+  --circle-tint: 50%;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* The height of what is on screen, for #app below. 100dvh is not that in every installed
+   app (it ran past the screen on a phone) */
+html,
+body {
+  height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 14px/1.5 var(--font-body); /* one text size across the app, apart from headings */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One centred column on every screen: the app is a list, and wider rows would not help */
+#app {
+  --gutter: 16px;
+  max-width: 560px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: env(safe-area-inset-top) var(--gutter) 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Narrow phones: a little less margin, so the set fields keep their room */
+@media (max-width: 380px) {
+  #app {
+    --gutter: 10px;
+  }
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
